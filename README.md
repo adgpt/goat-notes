@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GOAT Notes
+
+A modern, full-stack note-taking app built with Next.js, Prisma, Supabase, and Sonner for toast notifications.  
+This project is inspired by the [freeCodeCamp GOAT Notes tutorial](https://www.youtube.com/watch?v=6ChzCaljcaI) and follows best practices for scalable, type-safe, and user-friendly web applications.
+
+---
+
+## Features
+
+- **User Authentication** (Supabase)
+- **Create, Edit, and Delete Notes**
+- **Real-time UI updates**
+- **Debounced note saving**
+- **Responsive Sidebar**
+- **Toast notifications** (Sonner)
+- **Modern UI** (Shadcn UI, Tailwind CSS)
+- **PostgreSQL database** (via Prisma ORM)
+- **Cross-platform environment variable support** (`dotenv-cli`)
+- **AI integration ready** (Gemini/OpenAI API keys supported, official Gemini SDK)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the Repository
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```sh
+git clone https://github.com/your-username/goat-notes.git
+cd goat-notes
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm install
+# or
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set Up Environment Variables
 
-## Learn More
+Create a `.env.local` file in the project root with the following (replace with your own credentials):
 
-To learn more about Next.js, take a look at the following resources:
+```env
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+SUPABASE_URL=https://your-supabase-url.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Optional: For AI features
+GEMINI_API_KEY=your-gemini-api-key
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/apikey).
+- For more on Gemini SDK setup, see [Gemini Node.js Quickstart](https://ai.google.dev/gemini-api/docs/quickstart?lang=node).
 
-## Deploy on Vercel
+### 4. Set Up the Database
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Generate and migrate your database schema:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+npm run migrate
+```
+
+> **Note:** This project uses [`dotenv-cli`](https://www.npmjs.com/package/dotenv-cli) to load `.env.local` for Prisma commands, ensuring cross-platform compatibility.
+
+### 5. Run the Development Server
+
+```sh
+npm run dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## Project Structure
+
+```
+src/
+  actions/         # Server actions (login, signup, notes, AI)
+  app/             # Next.js app directory (App Router)
+  components/      # React components (Sidebar, NoteTextInput, etc.)
+  db/              # Prisma schema and client
+  hooks/           # Custom React hooks
+  lib/             # Utility functions
+  styles/          # Global styles
+```
+
+---
+
+## Scripts
+
+| Script      | Description                        |
+|-------------|------------------------------------|
+| dev         | Start the development server       |
+| build       | Build the app for production       |
+| start       | Start the production server        |
+| lint        | Run ESLint                         |
+| migrate     | Generate and run Prisma migrations |
+
+---
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [Prisma](https://www.prisma.io/)
+- [Supabase](https://supabase.com/)
+- [Sonner](https://sonner.emilkowal.ski/) (toast notifications)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [dotenv-cli](https://www.npmjs.com/package/dotenv-cli) (for cross-platform env support)
+- [@google/generative-ai](https://www.npmjs.com/package/@google/generative-ai) (official Gemini SDK)
+
+---
+
+## AI Integration (Gemini)
+
+- The app supports AI-powered note Q&A using the [Gemini API](https://ai.google.dev/gemini-api/docs/quickstart?lang=node).
+- To enable, add your `GEMINI_API_KEY` to `.env.local` and ensure `@google/generative-ai` is installed:
+  ```sh
+  npm install @google/generative-ai
+  ```
+- See [Gemini API docs](https://ai.google.dev/gemini-api/docs/libraries?lang=node) for more info.
+
+---
+
+## Troubleshooting
+
+- **Database connection issues:**  
+  Ensure your `DATABASE_URL` is correct and your network allows outbound connections to your Supabase database (port 5432). Some corporate networks may block this port.
+- **Environment variables not loading:**  
+  Make sure `.env.local` is in your project root and you are using `dotenv-cli` for Prisma commands.
+- **Sidebar not updating instantly:**  
+  The sidebar updates on navigation to a new note. For real-time updates, consider using client-side state management or a data fetching library.
+
+---
+
+## Credits
+
+- [freeCodeCamp.org](https://www.youtube.com/@freecodecamp)
+- [ColeBlender/goat-notes](https://github.com/ColeBlender/goat-notes) (original repo)
+
+---
+
+## License
+
+MIT
