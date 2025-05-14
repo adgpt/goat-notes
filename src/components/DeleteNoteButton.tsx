@@ -29,29 +29,24 @@ function DeleteNoteButton( {noteId, deleteNoteLocally}: Props) {
     const noteIdParam = useSearchParams().get("noteId") || ""
 
     const handleDeleteNote = async () => {
-        startTransition(async() =>{
-            const {errorMessage} = await deleteNoteAction(noteId)
+        startTransition(async () => {
+            const result = await deleteNoteAction(noteId);
+            const errorMessage = typeof result === "string"
+              ? result
+              : result?.errorMessage;
 
             if (!errorMessage) {
                 toast("Note deleted", {
-                    description: "Your note has been deleted successfully.",
-                    style: {
-                        backgroundColor: "rgb(239, 68, 68)", // Red for delete
-                        color: "white",
-                    },
+                    description: "Your note was deleted successfully."
                 });
                 deleteNoteLocally(noteId)
 
                 if (noteIdParam === noteId) {
                     router.replace("/")
                 }
-            } else{
-                toast("Error deleting note", {
-                    description: errorMessage,
-                    style: {
-                        backgroundColor: "rgb(239, 68, 68)",
-                        color: "white",
-                    },
+            } else {
+                toast("Error", {
+                    description: errorMessage
                 });
             }
         })
