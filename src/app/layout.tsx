@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import "../styles/globals.css";
+import "@/styles/globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/Header";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
 import NoteProvider from "@/providers/NoteProvider";
+import { Toaster } from "sonner"; // <-- Use Sonner's Toaster
 
 export const metadata: Metadata = {
-  title: "GOAT Notes"
+  title: "GOAT Notes",
 };
 
 export default function RootLayout({
@@ -18,23 +18,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-
-          <NoteProvider>
+          <NoteProvider
+            note={{
+              text: "",
+              id: "",
+              authorId: "",
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            }}
+          >
             <SidebarProvider>
               <AppSidebar />
+
               <div className="flex min-h-screen w-full flex-col">
                 <Header />
-                <main className="flex flex-1 flex-col px-4 pt-10 xl:px-8">{children}</main>
+
+                <main className="flex flex-1 flex-col px-4 pt-10 xl:px-8">
+                  {children}
+                </main>
               </div>
             </SidebarProvider>
-            <Toaster />
+
+            <Toaster /> {/* Sonner Toaster */}
           </NoteProvider>
         </ThemeProvider>
       </body>
