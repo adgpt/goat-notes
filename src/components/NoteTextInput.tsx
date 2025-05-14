@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -35,7 +34,9 @@ function NoteTextInput( {noteId, startingNoteText} : Props) {
     const handleUpdateNote = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text=e.target.value;
         setNoteText(text);
-        clearTimeout(updateTimeout);
+        if (updateTimeout) {
+            clearTimeout(updateTimeout);
+        }
         updateTimeout = setTimeout(() => {
             updateNoteAction(noteId, text);
         }, debounceTimeout);
