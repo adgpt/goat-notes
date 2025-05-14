@@ -70,8 +70,12 @@ function AskAIButton({user} : Props) {
 
     startTransition(async () => {
       const response = await askAIAboutNotesAction(newQuestions, responses);
-      setResponses((prev) => [...prev, response]);
-
+      const responseText = typeof response === "string"
+        ? response
+        : (typeof response === "object" && response !== null && "errorMessage" in response)
+          ? (response as { errorMessage: string }).errorMessage
+          : "An error occurred";
+      setResponses((prev) => [...prev, responseText]);
       setTimeout(scrollToBottom, 100);
     });
   }

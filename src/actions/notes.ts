@@ -18,7 +18,7 @@ export const updateNoteAction = async (noteId: string, text: string) => {
         return{errorMessage: null}
     }
     catch (error) {
-        return handleError(error)
+        return typeof error === "string" ? error : "An error occurred";
     }
 }
 
@@ -39,7 +39,7 @@ export const createNoteAction = async (noteId: string) => {
         return{errorMessage: null}
     }
     catch (error) {
-        return handleError(error)
+        return typeof error === "string" ? error : "An error occurred";
     }
 }
 
@@ -59,7 +59,7 @@ export const deleteNoteAction = async (noteId: string) => {
         return{errorMessage: null}
     }
     catch (error) {
-        return handleError(error)
+        return typeof error === "string" ? error : "An error occurred";
     }
 }
 
@@ -125,7 +125,7 @@ ${formattedNotes}
 
     return text || "A problem has occurred";
   } catch (error) {
-    return handleError(error);
+    return typeof error === "string" ? error : "An error occurred";
   }
 }
 
