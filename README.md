@@ -135,6 +135,21 @@ src/
   The sidebar updates on navigation to a new note. For real-time updates, consider using client-side state management or a data fetching library.
 
 ---
+## Future Updates
+
+### Rich Text Editing with Tiptap
+
+We plan to enhance the note-taking experience by integrating [Tiptap](https://tiptap.dev/), a powerful and extensible rich text editor for React. This will allow users to create and edit notes with formatting, lists, headings, and more—moving beyond plain text to a modern, rich text experience.
+
+**Migration Plan Highlights:**
+- Update the database to store Tiptap's JSON document format.
+- Replace the current note input and display components with Tiptap's editor and renderer.
+- Seamlessly migrate existing plain text notes to the new format.
+- Enable features like bold, italic, lists, and more, with potential for future collaborative editing.
+
+Stay tuned for this upgrade to make your notes more expressive and interactive!
+
+---
 
 ## Credits
 
